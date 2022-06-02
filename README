@@ -1,0 +1,23 @@
+## Creating KVM-server with cloud-init and GleSYS API
+
+This is a sample demo written in python to create (KVM) virtual machines
+in GleSYS Cloud with cloud-init data.
+
+You need to create a ini file with API project and key in your home directory
+named .glesys.ini containing:
+```
+[api]
+project = clxxxxxx
+key = .......
+```
+
+## Requirements:
+python3
+python3-pip
+
+## Install:
+pip install -r requirements.txt
+
+Running the commands:
+./create.py <hostname> <cloud-init.yaml>
+./delete.py <serverid>

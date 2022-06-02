@@ -1,0 +1,15 @@
+#cloud-config
+users:
+  - name: user
+    shell: /bin/bash
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    ssh_authorized_keys:
+    - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO8qj4Ss6P9LpZR7tAkj6osCwVWnE+krY8bzRttJ9pnj user
+chpasswd:
+  expire: False
+  ssh_pwauth: False
+
+phone_home:
+    url: http://yyy.yyy.yyy.yyy:8000/$INSTANCE_ID/
+    post:
+      - fqdn

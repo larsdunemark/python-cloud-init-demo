@@ -1,0 +1,45 @@
+Content-Type: multipart/mixed; boundary="===============2608925931130746424=="
+MIME-Version: 1.0
+
+--===============2608925931130746424==
+MIME-Version: 1.0
+Content-Type: text/cloud-config; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename="cloud-config"
+
+#cloud-config
+
+users:
+  - name: user
+    shell: /bin/bash
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    ssh_authorized_keys:
+    - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO8qj4Ss6P9LpZR7tAkj6osCwVWnE+krY8bzRttJ9pnj user
+chpasswd:
+  expire: False
+  ssh_pwauth: False
+
+packages:
+  - apache2
+
+--===============2608925931130746424==
+MIME-Version: 1.0
+Content-Type: text/x-shellscript-per-boot; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename="create_static_index.sh"
+
+#!/bin/sh
+
+echo """
+<pre>Hello world
+""" > /var/www/html/index.html
+
+echo "Server started: " >> /var/www/html/index.html
+date >> /var/www/html/index.html
+echo "</pre>" >> /var/www/html/index.html
+
+--===============2608925931130746424==
+
+
+
+
