@@ -1,0 +1,10 @@
+## template: glesys
+#cloud-config
+
+{{> users }}
+
+packages:
+    - apache2
+
+runcmd:
+  -  echo "Welcome {{users.0.username}}!" > /var/www/html/index.html

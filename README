@@ -21,3 +21,4 @@ pip install -r requirements.txt
 Running the commands:
 ./create.py <hostname> <cloud-init.yaml>
 ./delete.py <serverid>
+./preview.py <mustache-template>
