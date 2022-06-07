@@ -17,7 +17,7 @@ def get_auth():
     return config['api']['project'], config['api']['key']
 
 
-def create_server(hostname, cloud_init_data):
+def create_server(hostname, cloud_init_data, campaign_code):
     payload = {
         'datacenter': 'Falkenberg',
         "platform": "KVM",
@@ -30,6 +30,9 @@ def create_server(hostname, cloud_init_data):
         "cloudconfig": cloud_init_data
     }
 
+    if campaign_code is not None:
+        payload["campaigncode"] = campaign_code
+
     r = requests.post('https://api.glesys.com/server/create',
                       data=json.dumps(payload),
                       headers=get_headers(),
@@ -38,6 +41,9 @@ def create_server(hostname, cloud_init_data):
     resp = json.loads(r.text)
 
     print("Response: {}".format(resp["response"]["status"]["text"]))
+    if resp["response"]["status"]["code"] != 200:
+        return
+
     print("Server ID: {}".format(resp["response"]["server"]["serverid"]))
     iplist = resp["response"]["server"]["iplist"]
     for ip in iplist:
@@ -45,12 +51,16 @@ def create_server(hostname, cloud_init_data):
 
 
 if __name__ == '__main__':
-    if len(sys.argv) != 3:
-        print(f"Usage: {sys.argv[0]} <hostname> <cloud-init.yaml>")
+    if len(sys.argv) < 3:
+        print(f"Usage: {sys.argv[0]} <hostname> <cloud-init.yaml> [campaign-code]")
         sys.exit(1)
 
     hostname = sys.argv[1]
+    campaign_code = None
+    if len(sys.argv) > 3:
+        campaign_code = sys.argv[3]
+
     with open(sys.argv[2]) as cloud_init:
         cloud_init_data = cloud_init.read()
-        create_server(hostname, cloud_init_data)
+        create_server(hostname, cloud_init_data, campaign_code)
     sys.exit(0)
