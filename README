@@ -19,6 +19,7 @@ python3-pip
 pip install -r requirements.txt
 
 Running the commands:
-./create.py <hostname> <cloud-init.yaml>
+./create.py <hostname> <cloud-init.yaml> [campaign-code]
 ./delete.py <serverid>
 ./preview.py <mustache-template>
+./list.py
